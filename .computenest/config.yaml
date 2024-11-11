@@ -12,7 +12,7 @@ Service:
   DeployMetadata:
     SupplierDeployMetadata:
       FileArtifactRelation:
-        '{{ computenest::file::aliyun-computenest_quickstart-LobeChat-docker-compose }}':
+        '{{ computenest::file::Alicloud-ComputeNest_quickstart-LobeChat-docker-compose }}':
           ArtifactId: ${Artifact.Artifact_1.ArtifactId}
           ArtifactVersion: ${Artifact.Artifact_1.ArtifactVersion}
     TemplateConfigs:
@@ -30,7 +30,20 @@ Service:
 Artifact:
   Artifact_1:
     ArtifactType: File
-    ArtifactName: aliyun-computenest_quickstart-LobeChat-docker-compose
+    ArtifactName: Alicloud-ComputeNest_quickstart-LobeChat-docker-compose
     ArtifactProperty:
       RegionId: cn-hangzhou
       Url: 'resources/artifact_resources/docker_compose.tar'
+  Artifact_2:
+    ArtifactType: AcrImage
+    ArtifactName: lobehub-lobe-chat
+    ArtifactProperty:
+      RepoName: ${AcrImageBuilder.AcrImage_1.RepoName}
+      Tag: ${AcrImageBuilder.AcrImage_1.Tag}
+      RepoType: Public
+AcrImageBuilder:
+  AcrImage_1:
+    BuildType: DockerRepo
+    DockerRepoUrl: lobehub/lobe-chat
+    RepoName: lobehub/lobe-chat
+    Tag: latest
